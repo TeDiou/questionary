@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:font-family="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../static/css/login.css"/>
+		 <link rel="icon" href="../static/images/logo-S.png" height="60" width="60" type="image/x-icon"/>
+<link rel="stylesheet" href="../static/js/jconfirm/jquery-confirm.min.css">
+		<script src="../static/js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+	<form method="post" action="/login">
+		<div class="login">
+			<div class="content clearfix">
+				<div class="content-left">
+					<div class="logo">
+						<img src="../static/images/smalllogo.png" height="189" width="189" alt=""/>
+						<p>问卷作答系统</p>
+					</div>
+				</div>
+
+				<div class="shu"></div>
+				<div class="content-right">
+					<div class="login-form">
+						<h2>用户登录/LOGIN</h2>
+
+						<div class="account clearfix">
+							<span>账　号：</span>
+							<input type="text" name="id" id="email" class="ipt" placeholder="输入账号" oninput="setCustomValidity('');" required>
+						</div>
+						<div class="password clearfix">
+							<span>密　码：</span>
+								<input type="password" name="password" id="password" class="ipt" placeholder="请输入登录密码" oninput="setCustomValidity('');" required>
+						</div>
+						
+						<div class="account clearfix">
+							<span>验 证码：</span>
+								<input type="captcha" name="captcha" id="captcha" class="ipt" placeholder="请输入验证码" oninput="setCustomValidity('');" required>
+								
+						</div>
+						<div class="account clearfix">
+						<img id="verify_code" class="verify_code" src="/imgCode" onclick="this.src='/imgCode?'+ Math.random()">
+					</div>
+						<div class="btn" >
+							 <!-- <button class="register" >注册</button> -->
+							<input type="submit"  value="登  录" >
+							<span class="register">注册</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</form>
+	<script type="text/javascript" src="../static/js/jconfirm/jquery-confirm.min.js"></script>
+	<script>
+		$('.register').on('click', function () {
+         //data = {'id':id};
+        // $.post('/edit_staff',data);
+         let content = []
+         $(this).parent().parent().parent().children('td').each(function (){
+             content.push($(this).text())
+         });
+          $.ajax({
+                url: "/register",
+                type: "POST",
+
+                success: function(){
+                    console.log();
+                },
+                error: function(err) {
+                    console.log("验证失败");
+                }
+            });
+
+     $.confirm({
+        title: '注册用户',
+        content: '' +
+        `<form action="/register" class="formName">
+        <div class="form-group">
+        <label>账户id</label>
+        <input type="text"  value=""  id="id" name="id" class="ID form-control" required />
+        <label>用户名称</label>
+        <input type="text" value="" id="name" name="name" class="NAME form-control" required />'
+        <label>密码</label>
+        <input type="text"  value=""  id="password" name="password" class="password form-control" required />
+
+        </div>
+        </form>`,
+        buttons: {
+            formSubmit: {
+                text: '确认',
+                btnClass: 'btn-blue',
+                action: function () {
+                      var ID = this.$content.find('.ID').val();
+                       var NAME = this.$content.find('.NAME').val();
+                        var PASSWORD = this.$content.find('.password').val();
+                         
+                     data = {'id' : ID,'name':NAME,'password':PASSWORD};
+                    $.post('/register',data);
+                    $.alert('注册成功' );
+                },
+            },
+            cancel: {
+                text: '取消'
+            },
+        },
+        onContentReady: function () {
+            var jc = this;
+            this.$content.find('form').on('submit', function (e) {
+                e.preventDefault();
+                jc.$$formSubmit.trigger('click');
+            });
+        }
+     });
+});
+	</script>
+	</body>
+</html>
