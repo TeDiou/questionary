@@ -1,5 +1,6 @@
 import os
 import sqlite3
+import redis
 from dbOper import *
 from flask import Flask, render_template, request, flash, jsonify, redirect, url_for, session, g, \
     send_from_directory, make_response, send_file
@@ -11,6 +12,7 @@ import random
 import string
 from PIL import Image, ImageFont, ImageDraw, ImageFilter
 
+redis_client = redis.Redis(host='localhost', port=6379, db=0)
 #验证码
 @app.route('/imgCode')
 def imgCode():
@@ -88,10 +90,12 @@ def login():
         if len(result)>0:
             
             if result[0][2] == password: 
-                session['id'] = result[0][0]
-                session['name'] = result[0][1]
+                # session['id'] = result[0][0]
+                # session['name'] = result[0][1]
 
-                session.permanent = True  
+                # session.permanent = True  
+                redis_client.set("userId", result[0][0])
+                redis_client.set("userName", result[0][1])
                 
                 return redirect(url_for('index'))       
             else:
@@ -100,7 +104,7 @@ def login():
             return u'不存在这个用户'
 @app.route('/index.html', methods=['GET', 'POST'])
 def index():
-
+    print(redis_client.get("userId").decode())
     return render_template('index.html')
 
 @app.route('/register', methods=['POST'])
