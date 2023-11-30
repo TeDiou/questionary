@@ -206,43 +206,27 @@
         
         <div class="row">
           
-          <div class="card-body">
-
-            <div class="table-responsive">
-              <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th>问卷列表</th>
-                  </tr>
-                </thead>
-                <tbody>
-                {% for i in result %}
-                  <tr>
-                  <td>
-                      <label class="lyear-checkbox checkbox-primary">
-                        <input type="checkbox" name="ids[]" value="1"><span></span>
-                      </label>
-                    </td>
-
-                      <td>{{ i[1] }} </td>
-                      <td class="id" style="display: none;">{{ i[0] }}</td>
-                      <td class="questions" style="display: none;">{{ i[2] }}</td>
-                    </td> 
-                    <td>
-                          <div class="btn-group">
-                            <a class="btn btn-xs btn-default   edit" href="questions?id={{i[0]}}"  id="{{ i[0] }}" title="编辑" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>
-                          </div>
-                        </td> 
-                  </tr>
-                {% endfor %}
-                </tbody>
-              </table>
+          <div class="col-lg-6">
+            <div class="card">
+              <div class="card-body">
+                
+                <form method="post" action="submit" class="site-form" enctype="multipart/form-data">
+                  <div class="form-group">
+                    <label for="username">{{result[0][1]}}</label>
+                    <input style="display: none;" name = "id" value="{{result[0][0]}}">
+                  </div>
+                  {% for i in result[0][2].split(',') %}
+                   <div class="form-group">
+                  <label for="nickname">{{i}}</label>
+                  <input type="text" class="form-control" name="birth{{i}}" id="birth" value="" >
+                  </div>
+                
+                  {% endfor %}
+                  <p><input  type="file" name="file"></p>
+                  <button type="submit" class="btn btn-primary submit">提交</button>
+                </form>
+              </div>
             </div>
-            <ul class="pagination">
-               <li class="disabled"><span>共1页</span></li>
-              <li class="active"><span>1</span></li>
-            </ul>
-
           </div>
 
         </div>

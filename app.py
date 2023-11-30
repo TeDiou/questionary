@@ -79,11 +79,11 @@ def login():
     else:
         id = request.form.get('id')             
         password = request.form.get('password')    
-        captcha = request.form.get('captcha').lower()  
-        if captcha==session['imageCode'].lower():
-            pass
-        else:
-            return u'图片验证码错误'
+        # captcha = request.form.get('captcha').lower()  
+        # if captcha==session['imageCode'].lower():
+        #     pass
+        # else:
+        #     return u'图片验证码错误'
         sql = "select * from users where id = %s" % id
         result, _ = GetSqlResult(sql)
         print(result)
@@ -105,7 +105,41 @@ def login():
 @app.route('/index.html', methods=['GET', 'POST'])
 def index():
     print(redis_client.get("userId").decode())
-    return render_template('index.html')
+    result, _ = GetSqlResult("select * from questionnaire")
+    return render_template('index.html', result = result)
+
+@app.route('/questions', methods=['GET', 'POST'])
+def question():
+    id = request.values.get('id')
+    result, _ = GetSqlResult("select * from questionnaire where id = %s" % id)
+    print(result)
+    return render_template('question.html', result = result)
+
+@app.route('/submit', methods=['GET', 'POST'])
+def submit():
+    userId = redis_client.get("userId").decode()
+    id = request.values.get('id')
+    answer = []
+    i = 0
+    for key, value in request.values.items():
+        if i == 0:
+            i+=1
+            continue
+        print('{0}={1}<br/>'.format(key, value))
+        answer.append(str(value))
+    f = request.files['file']
+    # print(request.values.get('birth'), request.values)
+    basepath = os.path.dirname(__file__)
+    filename = userId+"_"+id+"_"+f.filename
+    answer.append(filename)
+    upload_path = os.path.join(basepath, r'uploads', filename)
+    f.save(upload_path)
+    print('uploading ...')
+    result, _ = GetSqlResult("select * from questionnaire")
+    sql = 'INSERT INTO answers (userId,questionId,answer) VALUES (%s ,%s,"%s")' % (
+    userId,id, str(answer))
+    executeSql(sql)
+    return render_template('index.html', result = result)
 
 @app.route('/register', methods=['POST'])
 def register():
@@ -113,23 +147,6 @@ def register():
     request.form.get('id'), request.form.get('name'), request.form.get('password'))
     executeSql(sql)
     
-
-@app.route('/upload', methods=['POST', 'GET'])
-def upload():
-    if request.method == 'POST':
-        f = request.files['file']
-        basepath = os.path.dirname(__file__)
-        upload_path = os.path.join(basepath, r'uploads', f.filename)
-        f.save(upload_path)
-        print('uploading ...')
-        # return redirect(url_for('download'))
-        filePath = r'D:\\1pythonCode\\gcsj_project\\demo\\uploads'
-        files = []
-        for i,j,k in os.walk(filePath):
-            files.extend(k)
-        print(files)
-    # return redirect(url_for('download'))
-    return render_template('aTrainModel.html',result = files,total = len(files))
  
 
 if __name__ == '__main__':
