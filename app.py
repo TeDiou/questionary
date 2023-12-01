@@ -129,11 +129,12 @@ def submit():
         answer.append(str(value))
     f = request.files['file']
     # print(request.values.get('birth'), request.values)
-    basepath = os.path.dirname(__file__)
-    filename = userId+"_"+id+"_"+f.filename
-    answer.append(filename)
-    upload_path = os.path.join(basepath, r'uploads', filename)
-    f.save(upload_path)
+    if f.filename != None:
+        basepath = os.path.dirname(__file__)
+        filename = userId+"_"+id+"_"+f.filename
+        answer.append(filename)
+        upload_path = os.path.join(basepath, r'uploads', filename)
+        f.save(upload_path)
     print('uploading ...')
     result, _ = GetSqlResult("select * from questionnaire")
     sql = 'INSERT INTO answers (userId,questionId,answer) VALUES (%s ,%s,"%s")' % (
@@ -146,8 +147,40 @@ def register():
     sql = "INSERT INTO users (id,name,password) VALUES (%s,'%s','%s')" % (
     request.form.get('id'), request.form.get('name'), request.form.get('password'))
     executeSql(sql)
-    
- 
+
+@app.route('/myAnswers', methods=['GET', 'POST'])
+def myAnswers():
+    userId = redis_client.get("userId").decode()
+    result, _ = GetSqlResult("select * from answers where userId = %s" % userId)
+    titles = []
+    for i in result:
+        title, _ = GetSqlResult("select title from questionnaire where id = %s" % i[2])
+        titles.append(title)
+    result = zip(result, titles)
+    print(titles)
+    return render_template('myAnswers.html', result = result)   
+
+@app.route('/answer', methods=['GET', 'POST'])
+def answer():
+    id = request.values.get('id')
+    result, _ = GetSqlResult("select * from answers where id = %s" % id)
+    # print(result)
+    questionId = result[0][2]
+    answer = result[0][3]
+    questionList, _ = GetSqlResult("select questions from questionnaire where id = %s" % questionId)
+    questionList = list(eval(questionList[0][0]))
+    questionList.append('上传文件名')
+    print(eval(answer), questionList)
+    result = zip(eval(answer), questionList)
+    return render_template('answer.html', result = result)
+
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    print(redis_client.get("userId").decode())
+    keyword = request.values.get('keyword')
+    print(keyword)
+    result, _ = GetSqlResult("select * from questionnaire where title like '%{}%'".format(keyword))
+    return render_template('index.html', result = result)
 
 if __name__ == '__main__':
     app.run("127.0.0.1", debug=True)

@@ -1,0 +1,2 @@
+10107888
+origin ctgan tabnet tabresnet : early stop 5 ctganopt earlystop 10

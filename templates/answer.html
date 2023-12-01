@@ -205,57 +205,26 @@
         
         
         <div class="row">
-          <div class="card-toolbar clearfix">
-            <form class="pull-right search-bar" method="get" action="/search" role="form">
-              <div class="input-group">
-                <div class="input-group-btn">
-                  <input type="hidden" name="search_field" id="search-field" value="title">
-                  <button class="btn btn-default dropdown-toggle" id="search-btn" data-toggle="dropdown" type="submit" aria-haspopup="true" aria-expanded="false">
-                  搜索 <span class="caret"></span>
-                  </button>
-                </div>
-                <input type="text" class="form-control" value="" name="keyword" placeholder="请输入内容">
+          
+          <div class="col-lg-6">
+            <div class="card">
+              <div class="card-body">
+                
+                <form method="post" action="submit" class="site-form" enctype="multipart/form-data">
+                  <div class="form-group">
+                    <label for="username"></label>
+                    <input style="display: none;" name = "id" value="">
+                  </div>
+                  {% for x,y in result %}
+                   <div class="form-group">
+                  <label for="nickname">{{y}}</label>
+                  <input type="text" class="form-control"  id="birth" value="{{x}}" >
+                  </div>
+                
+                  {% endfor %}
+                </form>
               </div>
-            </form>
-    
-          </div>
-          <div class="card-body">
-
-            <div class="table-responsive">
-              <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th>问卷列表</th>
-                  </tr>
-                </thead>
-                <tbody>
-                {% for i in result %}
-                  <tr>
-                  <td>
-                      <label class="lyear-checkbox checkbox-primary">
-                        <input type="checkbox" name="ids[]" value="1"><span></span>
-                      </label>
-                    </td>
-
-                      <td>{{ i[1] }} </td>
-                      <td class="id" style="display: none;">{{ i[0] }}</td>
-                      <td class="questions" style="display: none;">{{ i[2] }}</td>
-                    </td> 
-                    <td>
-                          <div class="btn-group">
-                            <a class="btn btn-xs btn-default   edit" href="questions?id={{i[0]}}"  id="{{ i[0] }}" title="编辑" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>
-                          </div>
-                        </td> 
-                  </tr>
-                {% endfor %}
-                </tbody>
-              </table>
             </div>
-            <ul class="pagination">
-               <li class="disabled"><span>共1页</span></li>
-              <li class="active"><span>1</span></li>
-            </ul>
-
           </div>
 
         </div>
