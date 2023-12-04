@@ -216,10 +216,19 @@
                     <input style="display: none;" name = "id" value="">
                   </div>
                   {% for x,y in result %}
-                   <div class="form-group">
-                  <label for="nickname">{{y}}</label>
-                  <input type="text" class="form-control"  id="birth" value="{{x}}" >
-                  </div>
+                  {% if y == "上传文件名" %}
+                  <div class="form-group">
+                    <label for="nickname">{{y}}</label>
+                    <a type="text" class="form-control"  href="http://localhost:1939/uploads/{{x}}" >{{x}}</a>
+                    </div>
+                    {% else%}
+                    <div class="form-group">
+                      <label for="nickname">{{y}}</label>
+                      <input type="text" class="form-control"  id="birth" value="{{x}}" >
+                      </div>
+                  {% endif%}
+                   
+                  
                 
                   {% endfor %}
                 </form>

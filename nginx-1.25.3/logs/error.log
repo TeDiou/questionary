@@ -1,0 +1,22 @@
+2023/12/01 16:24:52 [error] 11152#3844: *1 CreateFile() "D:\environment\nginx-1.25.3/html/favicon.ico" failed (2: The system cannot find the file specified), client: 127.0.0.1, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "localhost", referrer: "http://localhost/"
+2023/12/01 16:38:53 [emerg] 22832#7916: invalid parameter "weight" in D:\environment\nginx-1.25.3/conf/nginx.conf:33
+2023/12/01 16:39:36 [emerg] 3704#6116: invalid parameter "weight" in D:\environment\nginx-1.25.3/conf/nginx.conf:33
+2023/12/01 16:40:05 [notice] 11868#9472: signal process started
+2023/12/01 16:40:07 [notice] 3620#21856: signal process started
+2023/12/01 16:40:23 [error] 6784#4560: *7 connect() failed (10061: No connection could be made because the target machine actively refused it) while connecting to upstream, client: 127.0.0.1, server: localhost, request: "GET /static/css/login.css HTTP/1.1", upstream: "http://127.0.0.1:5001/static/css/login.css", host: "localhost:81", referrer: "http://localhost:81/"
+2023/12/01 16:40:24 [error] 6784#4560: *10 connect() failed (10061: No connection could be made because the target machine actively refused it) while connecting to upstream, client: 127.0.0.1, server: localhost, request: "GET /static/js/jquery-1.9.1.min.js HTTP/1.1", upstream: "http://127.0.0.1:5001/static/js/jquery-1.9.1.min.js", host: "localhost:81", referrer: "http://localhost:81/"
+2023/12/01 16:40:24 [error] 6784#4560: *14 connect() failed (10061: No connection could be made because the target machine actively refused it) while connecting to upstream, client: 127.0.0.1, server: localhost, request: "GET /imgCode HTTP/1.1", upstream: "http://127.0.0.1:5001/imgCode", host: "localhost:81", referrer: "http://localhost:81/"
+2023/12/01 23:26:11 [notice] 11432#21876: signal process started
+2023/12/01 23:29:38 [emerg] 11844#23008: unknown directive "toindex" in D:\environment\nginx-1.25.3/conf/nginx.conf:56
+2023/12/01 23:29:41 [emerg] 23256#23392: unknown directive "toindex" in D:\environment\nginx-1.25.3/conf/nginx.conf:56
+2023/12/01 23:30:02 [emerg] 21264#11820: unknown directive "toindex" in D:\environment\nginx-1.25.3/conf/nginx.conf:56
+2023/12/01 23:30:30 [emerg] 3984#2556: unexpected "}" in D:\environment\nginx-1.25.3/conf/nginx.conf:59
+2023/12/01 23:30:57 [notice] 8460#17324: signal process started
+2023/12/01 23:30:57 [error] 8460#17324: CreateFile() "D:\environment\nginx-1.25.3/logs/nginx.pid" failed (2: The system cannot find the file specified)
+2023/12/01 23:32:49 [notice] 22860#5292: signal process started
+2023/12/01 23:32:49 [error] 22860#5292: CreateFile() "D:\environment\nginx-1.25.3/logs/nginx.pid" failed (2: The system cannot find the file specified)
+2023/12/01 23:40:27 [notice] 9224#11824: signal process started
+2023/12/01 23:40:52 [error] 10484#4736: *1 CreateFile() "D:\1pythonCode\gcsj_project\demo\nginx-1.25.3/html/favicon.ico" failed (2: The system cannot find the file specified), client: 127.0.0.1, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "localhost:1939", referrer: "http://localhost:1939/"
+2023/12/01 23:41:44 [error] 10484#4736: *1 CreateFile() "D:\1pythonCode\gcsj_project\demo\nginx-1.25.3/html/upload" failed (2: The system cannot find the file specified), client: 127.0.0.1, server: localhost, request: "GET /upload HTTP/1.1", host: "localhost:1939"
+2023/12/04 11:03:42 [notice] 5044#4132: signal process started
+2023/12/04 11:03:42 [error] 5044#4132: OpenEvent("Global\ngx_reload_19732") failed (2: The system cannot find the file specified)

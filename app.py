@@ -79,21 +79,17 @@ def login():
     else:
         id = request.form.get('id')             
         password = request.form.get('password')    
-        # captcha = request.form.get('captcha').lower()  
-        # if captcha==session['imageCode'].lower():
-        #     pass
-        # else:
-        #     return u'图片验证码错误'
+        captcha = request.form.get('captcha').lower()  
+        if captcha==session['imageCode'].lower():
+            pass
+        else:
+            return u'图片验证码错误'
         sql = "select * from users where id = %s" % id
         result, _ = GetSqlResult(sql)
         print(result)
         if len(result)>0:
             
             if result[0][2] == password: 
-                # session['id'] = result[0][0]
-                # session['name'] = result[0][1]
-
-                # session.permanent = True  
                 redis_client.set("userId", result[0][0])
                 redis_client.set("userName", result[0][1])
                 
